@@ -1,2 +1,7 @@
-# wallet-frontend
-功能：Web用户界面，展示余额、交易等。用途：提供用户交互入口。
+# wallet-website
+
+> 项目介绍网站
+
+## 页面截图示意
+
+![页面截图-首页](./public/images/页面截图-首页.png)
