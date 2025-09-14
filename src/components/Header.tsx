@@ -2,9 +2,11 @@
 
 import { useState } from "react";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 
 export default function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const pathname = usePathname();
 
   const navigationItems = [
     { name: "首页", href: "/" },
@@ -30,15 +32,22 @@ export default function Header() {
 
           {/* 桌面导航 */}
           <nav className="hidden md:flex items-center space-x-8">
-            {navigationItems.map((item) => (
-              <Link
-                key={item.name}
-                href={item.href}
-                className="text-sm font-medium text-foreground/60 transition-colors hover:text-foreground hover:underline underline-offset-4 decoration-2 decoration-purple-500"
-              >
-                {item.name}
-              </Link>
-            ))}
+            {navigationItems.map((item) => {
+              const isActive = pathname === item.href;
+              return (
+                <Link
+                  key={item.name}
+                  href={item.href}
+                  className={`text-sm font-medium transition-colors hover:text-foreground hover:underline underline-offset-4 decoration-2 decoration-purple-500 ${
+                    isActive
+                      ? "text-foreground underline"
+                      : "text-foreground/60"
+                  }`}
+                >
+                  {item.name}
+                </Link>
+              );
+            })}
           </nav>
 
           {/* GitHub链接和菜单按钮 */}
@@ -88,16 +97,23 @@ export default function Header() {
         {/* 移动端菜单 */}
         <div className={`md:hidden ${isMenuOpen ? "block" : "hidden"}`}>
           <div className="space-y-1 px-2 pb-3 pt-2">
-            {navigationItems.map((item) => (
-              <Link
-                key={item.name}
-                href={item.href}
-                className="block rounded-md px-3 py-2 text-base font-medium text-foreground/60 hover:text-foreground hover:bg-foreground/5 transition-colors"
-                onClick={() => setIsMenuOpen(false)}
-              >
-                {item.name}
-              </Link>
-            ))}
+            {navigationItems.map((item) => {
+              const isActive = pathname === item.href;
+              return (
+                <Link
+                  key={item.name}
+                  href={item.href}
+                  className={`block rounded-md px-3 py-2 text-base font-medium transition-colors hover:text-foreground hover:bg-foreground/5 ${
+                    isActive
+                      ? "text-foreground bg-foreground/5"
+                      : "text-foreground/60"
+                  }`}
+                  onClick={() => setIsMenuOpen(false)}
+                >
+                  {item.name}
+                </Link>
+              );
+            })}
           </div>
         </div>
       </div>
